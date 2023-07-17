@@ -1,0 +1,98 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+using System.Windows.Forms.VisualStyles;
+using System.Diagnostics.Eventing.Reader;
+
+namespace LoginForm
+{
+    public partial class LoginForm : Form
+    {
+        private login l2;
+
+        public LoginForm()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection("Data Source=DESKTOP-MM079OT\\SQLEXPRESS;Initial Catalog=LoginPage;Integrated Security=True");
+            string query = ("SELECT * FROM UserLogin where Username='" + txtUsername.Text + " 'AND Password ='" + txtPassword.Text + "' ");
+            con.Open();
+            SqlDataAdapter sda = new SqlDataAdapter(query, con);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            if(dt.Rows.Count > 0)
+            {
+                this.Hide();
+                LoginConnected f2 = new LoginConnected();
+                f2.Show();
+            }
+            
+            else if (txtUsername.Text == "")
+            {
+                lblUsername.ForeColor = Color.Red;
+                lblUsername.Text = "enter the username";
+            }
+            else if (txtUsername.Text != "")
+            {
+                lblUsername.Text = "";
+                if (txtPassword.Text == "")
+                {
+                    lblPassword.ForeColor = Color.Red;
+                    lblPassword.Text = "enter the password";
+                }
+                else if (txtPassword.Text != "")
+                {
+                    lblPassword.Text = "";
+                
+                 if (txtUsername.Text != query && txtPassword.Text != query)
+
+                {
+                        lblPassword.ForeColor = Color.Red;
+                    lblPassword.Text = "Username and password are not existing";
+                }
+            }
+            }
+
+        }
+
+        private void UsernameLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtUsername_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PasswordLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LoginHead_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
